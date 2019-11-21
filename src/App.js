@@ -1,10 +1,13 @@
 import React from 'react';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Dashboard from "./components/dashboard";
 
 function App() {
     return (
-        <div>
-            Test
-        </div>
+        <>
+        <CssBaseline />
+        <Dashboard />
+        </>
     );
 }
 
