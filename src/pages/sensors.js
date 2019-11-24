@@ -8,8 +8,8 @@ function content() {
     )
 }
 
-function map() {
+function sensors() {
     return <Dashboard title={"Sensors"} content={content()} menuSelected={"sensors"} user={null} />
 }
 
-export default map;
+export default sensors;

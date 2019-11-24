@@ -8,8 +8,8 @@ function content() {
     )
 }
 
-function map() {
+function logout() {
     return <Dashboard title={"Log out"} content={content()} menuSelected={"logout"} user={null} />
 }
 
-export default map;
+export default logout;

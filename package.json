@@ -6,7 +6,11 @@
     "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
     "clsx": "^1.0.4",
+    "echarts": "^4.5.0",
+    "echarts-for-react": "^2.0.15-beta.1",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^9.1.4",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "typeface-roboto": "^0.0.75"

@@ -74,7 +74,7 @@ function Dashboard({title, menuSelected, content, user=null}) {
             openDrawer={openDrawer}
             menuSelected={menuSelected}
         />
-        <Container maxWidth="sm">
+        <Container>
             {content}
         </Container>
     </>)

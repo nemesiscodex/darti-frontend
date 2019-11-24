@@ -8,8 +8,8 @@ function content() {
     )
 }
 
-function map() {
+function download() {
     return <Dashboard title={"Download Data"} content={content()} menuSelected={"download"} user={null} />
 }
 
-export default map;
+export default download;

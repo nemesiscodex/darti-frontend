@@ -8,8 +8,8 @@ function content() {
     )
 }
 
-function map() {
+function areas() {
     return <Dashboard title={"Areas"} content={content()} menuSelected={"areas"} user={null} />
 }
 
-export default map;
+export default areas;
