@@ -8,10 +8,17 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Container from '@material-ui/core/Container';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import DashboardDrawer from "./DashboardDrawer";
+import theme from '../theme'
+import Hidden from "@material-ui/core/Hidden";
 
+
+const drawerWidth = 250;
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow: 1,
+        [theme.breakpoints.up('sm')]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+        }
     },
     menuButton: {
         marginRight: theme.spacing(1),
@@ -57,11 +64,13 @@ function Dashboard({title, menuSelected, content, user=null}) {
 
     const classes = useStyles();
     return (<>
-        <AppBar position={"static"}>
+        <AppBar className={classes.root} position={"static"}>
             <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openDrawer}>
-                    <MenuIcon/>
-                </IconButton>
+                <Hidden smUp implementation="css">
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openDrawer}>
+                        <MenuIcon/>
+                    </IconButton>
+                </Hidden>
                 <Typography variant="h6" className={classes.title}>
                     {title}
                 </Typography>
@@ -69,14 +78,17 @@ function Dashboard({title, menuSelected, content, user=null}) {
             </Toolbar>
         </AppBar>
         <DashboardDrawer
+            drawerWidth={drawerWidth}
             open={open}
             closeDrawer={closeDrawer}
             openDrawer={openDrawer}
             menuSelected={menuSelected}
         />
-        <Container>
-            {content}
-        </Container>
+        <div className={classes.root}>
+            <Container >
+                {content}
+            </Container>
+        </div>
     </>)
 }
 

@@ -19,30 +19,49 @@ import Divider from "@material-ui/core/Divider";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import Link from "./Link";
+import theme from '../theme'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {Drawer} from "@material-ui/core";
+import Hidden from "@material-ui/core/Hidden";
 
-const useStyles = makeStyles(theme => ({
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: theme.spacing(0, 1),
-        ...theme.mixins.toolbar,
-    },
-    darti: {
-        fill: theme.palette.primary.main,
-        height: "1.2em",
-        marginRight: theme.spacing(2)
-    },
-    dartiButton: {
-        '&:hover': {
-            backgroundColor: "rgba(0, 0, 0, 0)"
-        }
-    }
-}));
+function useStyles(drawerWidth) {
+    return makeStyles(theme => ({
+        toolbar: {
+            display: 'flex',
+            alignItems: 'center',
+            [theme.breakpoints.down('sm')]: {
+                justifyContent: 'flex-end'
+            },
+            [theme.breakpoints.up('xs')]: {
+                justifyContent: 'center'
+            },
+            padding: theme.spacing(0, 1),
+            ...theme.mixins.toolbar,
+        },
+        darti: {
+            fill: theme.palette.primary.main,
+            height: "1.2em",
+            marginRight: theme.spacing(2),
+        },
+        dartiButton: {
+            '&:hover': {
+                backgroundColor: "rgba(0, 0, 0, 0)"
+            }
+        },
+        drawer: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
+        drawerPaper: {
+            width: drawerWidth,
+        },
+    }))();
+}
 
-function DashboardDrawer({open, openDrawer, closeDrawer, menuSelected}) {
+function menuItems(classes, open, openDrawer, closeDrawer, menuSelected) {
 
-    function menu({key, title, icon}) {
+
+    function createItem({key, title, icon}) {
         const CurrentIcon = icon;
 
         if (key.startsWith("divider")) {
@@ -51,14 +70,21 @@ function DashboardDrawer({open, openDrawer, closeDrawer, menuSelected}) {
         const href = "/" + ((key === "home")? "": key);
 
         return (
-            <ListItem key={key} selected={key === menuSelected} href={href} component={Link} button>
+            <ListItem
+                key={key}
+                selected={key === menuSelected}
+                href={href}
+                component={Link}
+                onClick={closeDrawer}
+                button>
                 <ListItemIcon><CurrentIcon/></ListItemIcon>
                 <ListItemText primary={title} />
             </ListItem>
         )
     }
 
-    const menuItems = [
+
+    const items = [
         {
             key: "home",
             title: "Home",
@@ -115,36 +141,59 @@ function DashboardDrawer({open, openDrawer, closeDrawer, menuSelected}) {
         },
     ];
 
-    const classes = useStyles();
+    return (<>
+        <div className={classes.toolbar}>
+            <IconButton className={classes.dartiButton}
+                        disableRipple={true}
+                        disableFocusRipple={true}
+            >
+                <Darti className={classes.darti} />
+            </IconButton>
 
-    return (<SwipeableDrawer
-        variant={"temporary"}
-        onBackdropClick={closeDrawer}
-        onOpen={openDrawer}
-        onClose={closeDrawer}
-        open={open}
-        disableBackdropTransition={true}
-        disableDiscovery={true}
-        >
-        <>
-
-            <div className={classes.toolbar}>
-                <IconButton className={classes.dartiButton}
-                    disableRipple={true}
-                    disableFocusRipple={true}
-                >
-                    <Darti className={classes.darti} />
-                </IconButton>
+            <Hidden smUp implementation="css">
                 <IconButton
                     onClick={closeDrawer}>
                     <ChevronLeftIcon />
                 </IconButton>
-            </div>
-            <List>
-                {menuItems.map((item) => menu({...item}))}
-            </List>
-        </>
-    </SwipeableDrawer>)
+            </Hidden>
+        </div>
+        <List>
+            {items.map((item) => createItem({...item}))}
+        </List>
+    </>)
+}
+
+function DashboardDrawer({drawerWidth, open, openDrawer, closeDrawer, menuSelected}) {
+
+
+    const classes = useStyles(drawerWidth);
+
+    return (<>
+        <Hidden xsUp implementation="css">
+            <SwipeableDrawer
+                variant={"temporary"}
+                onBackdropClick={closeDrawer}
+                onOpen={openDrawer}
+                onClose={closeDrawer}
+                open={open}
+                disableBackdropTransition={true}
+                disableDiscovery={true}
+                >
+                {menuItems(classes, open, openDrawer, closeDrawer, menuSelected)}
+            </SwipeableDrawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+            <Drawer
+                className={classes.drawer}
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+                variant={"permanent"}
+            >
+                {menuItems(classes, open, openDrawer, closeDrawer, menuSelected)}
+            </Drawer>
+        </Hidden>
+    </>)
 }
 
 export default DashboardDrawer
