@@ -9,7 +9,7 @@ function calendarData(t, data) {
     let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
         'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(t);
     let days = ['0S', '1M', '2T', '3W', '4T', '5F', '6S'].map(t)
-    console.log(months);
+
     let now = new Date();
     let max = 0;
     let min = Infinity;

@@ -33,7 +33,6 @@ function rainfallData(t, data) {
                     optionToContent: function(opt) {
                         let axisData = opt.dataset[0].source;
 
-                        console.log(axisData.length);
                         let series = opt.series;
                         let textArea = '<textarea style="width: 100%; height: 100%; font-family: monospace; font-size: 14px; line-height: 1.6rem; color: rgb(0, 0, 0); border-color: rgb(51, 51, 51); background-color: rgb(255, 255, 255);">'
                             + '"Time",'

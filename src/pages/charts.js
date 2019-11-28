@@ -15,6 +15,7 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns';
 import Button from "@material-ui/core/Button";
 import RefreshIcon from "@material-ui/icons/Refresh"
+import backend from '../backend'
 
 const datePicker = (t, selectedDate, setDate, label) => (
 
@@ -151,18 +152,19 @@ function charts({t, readings, activations}) {
 }
 
 async function getReadings() {
-    const response = await fetch('https://backend.nemesiscodex.io/readings?elements=50');
+    const response = await fetch(backend + '/readings?elements=500');
     return await response.json();
 }
 async function getActivations() {
-    const response = await fetch('https://backend.nemesiscodex.io/activations?elements=50');
+    const response = await fetch(backend + '/activations?elements=16000');
     return await response.json();
 }
 
 charts.getInitialProps = async function() {
+    let [readings, activations] = await Promise.all([getReadings(), getActivations()]);
   return {
-      readings: await getReadings(),
-      activations: await getActivations()
+      readings: readings,
+      activations: activations
   }
 };
 
