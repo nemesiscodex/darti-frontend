@@ -19,10 +19,13 @@ import Divider from "@material-ui/core/Divider";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import Link from "./Link";
-import theme from '../theme'
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {Drawer} from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import TranslateIcon from "@material-ui/icons/Translate"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import { i18n } from "../i18n";
 
 function useStyles(drawerWidth) {
     return makeStyles(theme => ({
@@ -58,7 +61,7 @@ function useStyles(drawerWidth) {
     }))();
 }
 
-function menuItems(classes, open, openDrawer, closeDrawer, menuSelected) {
+function menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected) {
 
 
     function createItem({key, title, icon}) {
@@ -87,17 +90,17 @@ function menuItems(classes, open, openDrawer, closeDrawer, menuSelected) {
     const items = [
         {
             key: "home",
-            title: "Home",
+            title: t("Home"),
             icon: HomeIcon
         },
         {
             key: "map",
-            title: "Map",
+            title: t("Map"),
             icon: MapIcon
         },
         {
             key: "charts",
-            title: "Charts",
+            title: t("Charts"),
             icon: InsertChartIcon
         },
         {
@@ -105,7 +108,7 @@ function menuItems(classes, open, openDrawer, closeDrawer, menuSelected) {
         },
         {
             key: "download",
-            title: "Download Data",
+            title: t("Download Data"),
             icon: CloudDownloadIcon
         },
         {
@@ -113,17 +116,17 @@ function menuItems(classes, open, openDrawer, closeDrawer, menuSelected) {
         },
         {
             key: "areas",
-            title: "Areas",
+            title: t("Areas"),
             icon: LocationOnIcon
         },
         {
             key: "sensors",
-            title: "Sensors",
+            title: t("Sensors"),
             icon: TrackChangesIcon
         },
         {
             key: "users",
-            title: "Users",
+            title: t("Users"),
             icon: PeopleIcon
         },
         {
@@ -131,12 +134,12 @@ function menuItems(classes, open, openDrawer, closeDrawer, menuSelected) {
         },
         {
             key: "settings",
-            title: "Settings",
+            title: t("Settings"),
             icon: SettingsIcon
         },
         {
             key: "logout",
-            title: "Log out",
+            title: t("Log out"),
             icon: ExitToAppIcon
         },
     ];
@@ -163,10 +166,30 @@ function menuItems(classes, open, openDrawer, closeDrawer, menuSelected) {
     </>)
 }
 
-function DashboardDrawer({drawerWidth, open, openDrawer, closeDrawer, menuSelected}) {
+function DashboardDrawer({t, drawerWidth, open, openDrawer, closeDrawer, menuSelected}) {
 
 
     const classes = useStyles(drawerWidth);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const changeLanguage = (lang) => {
+        return function() {
+            i18n.changeLanguage(lang);
+            handleClose();
+        }
+    };
+
+    const language = i18n.language;
 
     return (<>
         <Hidden xsUp implementation="css">
@@ -179,7 +202,7 @@ function DashboardDrawer({drawerWidth, open, openDrawer, closeDrawer, menuSelect
                 disableBackdropTransition={true}
                 disableDiscovery={true}
                 >
-                {menuItems(classes, open, openDrawer, closeDrawer, menuSelected)}
+                {menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected)}
             </SwipeableDrawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -190,7 +213,29 @@ function DashboardDrawer({drawerWidth, open, openDrawer, closeDrawer, menuSelect
                 }}
                 variant={"permanent"}
             >
-                {menuItems(classes, open, openDrawer, closeDrawer, menuSelected)}
+                {menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected)}
+                <List>
+                    <ListItem onClick={handleClick} href="#" >
+                        <ListItemIcon><TranslateIcon /></ListItemIcon>
+                        <ListItemText>{(language == "en")? t("English"): t("Spanish")}</ListItemText>
+                        <ListItemIcon><ExpandMoreIcon /></ListItemIcon>
+                    </ListItem>
+                </List>
+                <Menu
+                    variant={"menu"}
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    >
+                    <MenuItem
+                        style={{width: drawerWidth-50}} onClick={changeLanguage("en")} selected={language === "en"}>
+                        {t("English")}
+                    </MenuItem>
+                    <MenuItem onClick={changeLanguage("es")} selected={language === "es"}>
+                        {t("Spanish")}
+                    </MenuItem>
+                </Menu>
             </Drawer>
         </Hidden>
     </>)

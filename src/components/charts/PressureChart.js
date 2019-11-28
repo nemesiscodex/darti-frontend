@@ -1,14 +1,13 @@
-import Chart from "./Chart";
+import { Chart, addCommas } from "./Chart";
 import React from "react";
-import echarts from "echarts/lib/echarts";
 
-function pressureData(data) {
+function pressureData(t, data) {
     const dataSize = data.length;
     const dataStart = Math.min(99, Math.max(0, Math.round((dataSize-30)*100/dataSize)));
 
     return {
         title: {
-            text: echarts.format.addCommas(data.length) + ' Datapoints',
+            text: addCommas(data.length) + t(' Datapoints'),
         },
         legend: {
             top: 30,
@@ -24,23 +23,21 @@ function pressureData(data) {
                 magicType: {
                     type: ['line', 'bar'],
                     title: {
-                        line: "Line",
-                        bar: "Bar"
+                        line: t("Line"),
+                        bar: t("Bar")
                     }
                 },
                 dataView: {
-                    title: "Data view",
-                    lang: ['Data view', 'Close', 'Refresh'],
+                    title: t("Data view"),
+                    lang: ['Data view', 'Close'].map(t),
                     optionToContent: function(opt) {
-                        console.log(opt.dataset[0].source);
-                        var axisData = opt.dataset[0].source;
+                        let axisData = opt.dataset[0].source;
 
-                        console.log(axisData.length);
-                        var series = opt.series;
-                        var textArea = '<textarea style="width: 100%; height: 100%; font-family: monospace; font-size: 14px; line-height: 1.6rem; color: rgb(0, 0, 0); border-color: rgb(51, 51, 51); background-color: rgb(255, 255, 255);">'
+                        let series = opt.series;
+                        let textArea = '<textarea style="width: 100%; height: 100%; font-family: monospace; font-size: 14px; line-height: 1.6rem; color: rgb(0, 0, 0); border-color: rgb(51, 51, 51); background-color: rgb(255, 255, 255);">'
                             + '"Time",'
                             + '"' + series[0].name + '"\n';
-                        for (var i = 1, l = axisData.length; i < l; i++) {
+                        for (let i = 1, l = axisData.length; i < l; i++) {
                             textArea += axisData[i][0] + ','
                                 + axisData[i][1] + '\n';
                         }
@@ -51,10 +48,10 @@ function pressureData(data) {
                 },
                 saveAsImage: {
                     pixelRatio: 4,
-                    title: "Save Image"
+                    title: t("Save Image")
                 },
                 restore: {
-                    title: "Restore"
+                    title: t("Restore")
                 },
             }
         },
@@ -84,7 +81,7 @@ function pressureData(data) {
         yAxis: [
             {
                 type: "value",
-                name: "Pressure (mbar)",
+                name: t("Pressure (mbar)"),
                 nameLocation: 'middle',
                 nameGap: 42,
                 scale: true
@@ -94,11 +91,11 @@ function pressureData(data) {
             source: [[data[0].timestamp - 1, 1000],
                 ...data.map((entry) =>
                     [entry.timestamp, entry.weatherInfo.atmosphericPressure])],
-            dimensions: ['Timestamp', 'Atmospheric Pressure']
+            dimensions: ['Timestamp', 'Atmospheric Pressure'].map(t)
         },
         series: [
             {
-                name: 'Atmospheric Pressure',
+                name: t('Atmospheric Pressure'),
                 type: 'bar',
                 large: true,
                 smooth:true,
@@ -106,8 +103,8 @@ function pressureData(data) {
                     color: "#536F86"
                 },
                 encode: {
-                    x: 'Timestamp',
-                    y: 'Atmospheric Pressure'
+                    x: t('Timestamp'),
+                    y: t('Atmospheric Pressure')
                 },
                 yAxisIndex: 0,
                 areaStyle: {}
@@ -120,8 +117,8 @@ function pressureData(data) {
     }
 }
 
-export default function PressureChart({data}) {
+export default function PressureChart({t, data}) {
     return (<>
-        <Chart options={pressureData(data)}/>
+        <Chart options={pressureData(t, data)}/>
     </>)
 }

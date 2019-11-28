@@ -1,5 +1,6 @@
 import React from "react";
 import Dashboard from "../components/Dashboard";
+import { withTranslation } from '../i18n'
 
 function content() {
     return (
@@ -8,8 +9,8 @@ function content() {
     )
 }
 
-function download() {
-    return <Dashboard title={"Download Data"} content={content()} menuSelected={"download"} user={null} />
+function download({t}) {
+    return <Dashboard t={t} title={"Download Data"} content={content()} menuSelected={"download"} user={null} />
 }
 
-export default download;
+export default withTranslation('common')(download);

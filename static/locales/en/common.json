@@ -1,0 +1,79 @@
+{
+  "Log in": "Log in",
+  "Home": "Home",
+  "Map": "Map",
+  "Charts": "Charts",
+  "Download Data": "Download Data",
+  "Areas": "Areas",
+  "Sensors": "Sensors",
+  "Users": "Users",
+  "Settings": "Settings",
+  "Log out": "Log out",
+
+  "Sensor": "Sensor",
+  "Sensor Activations": "Sensor Activations",
+  " Datapoints": " Datapoints",
+  "Line": "Line",
+  "Bar": "Bar",
+  "Sensor Identifier": "Sensor Identifier",
+  "Data view": "Data view",
+  "Close": "Close",
+  "Save Image": "Save Image",
+  "Restore": "Restore",
+  "Activation Count": "Activation Count",
+
+  "Jan": "Jan",
+  "Feb": "Feb",
+  "Mar": "Mar",
+  "Apr": "Apr",
+  "May": "May",
+  "Jun": "Jun",
+  "Jul": "Jul",
+  "Aug": "Aug",
+  "Sep": "Sep",
+  "Oct": "Oct",
+  "Nov": "Nov",
+  "Dec": "Dec",
+
+  "0S": "S",
+  "1M": "M",
+  "2T": "T",
+  "3W": "W",
+  "4T": "T",
+  "5F": "F",
+  "6S": "S",
+
+  "Rainfall/Humidity": "Rainfall/Humidity",
+  "Rainfall (mm)": "Rainfall (mm)",
+  "Humidity (%)": "Humidity (%)",
+  "Timestamp": "Timestamp",
+  "Rainfall": "Rainfall",
+  "Humidity": "Humidity",
+
+  "Atmospheric Pressure": "Atmospheric Pressure",
+  "Pressure (mbar)": "Pressure (mbar)",
+
+  "Wind": "Wind",
+  "Velocity (km/h)": "Velocity (km/h)",
+  "Wind Velocity": "Wind Velocity",
+  "Wind Direction": "Wind Direction",
+  "Velocity": "Velocity",
+  "Direction": "Direction",
+
+  "Temperature": "Temperature",
+  "Celsius (℃)": "Celsius (℃)",
+  "Interior Temperature": "Interior Temperature",
+  "Exterior Temperature": "Exterior Temperature",
+  "Interior": "Interior",
+  "Exterior": "Exterior",
+
+  "English": "English",
+  "Spanish": "Spanish",
+
+  "MM/dd/yyyy": "MM/dd/yyyy",
+
+  "From Date": "From Date",
+  "To Date": "To Date"
+
+
+}

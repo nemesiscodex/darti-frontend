@@ -5,10 +5,16 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme';
 import NProgress from 'nprogress';
-import Router from 'next/router'
+import Router from 'next/router';
+import { appWithTranslation } from '../i18n'
+import Error from 'next/error'
+
+const originalMethod = Error.getInitialProps;
+Error.getInitialProps = function(props) {
+    return originalMethod({...props, namespacesRequired: ['common']})
+};
 
 Router.events.on('routeChangeStart', url => {
-    console.log(`Loading: ${url}`);
     NProgress.start()
 });
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -22,10 +28,10 @@ function nprogressCss() {
     }
     
     #nprogress .bar {
-        background: #fff;
+        background: #de6385;
     
         position: fixed;
-        z-index: 1031;
+        z-index: 1300;
         top: 0;
         left: 0;
     
@@ -49,7 +55,7 @@ function nprogressCss() {
     }`}</style>)
 }
 
-export default class MyApp extends App {
+class MyApp extends App {
     componentDidMount() {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');
@@ -66,7 +72,7 @@ export default class MyApp extends App {
                 <Head>
                     <meta
                         name="description"
-                        content="Darti web app"
+                        content="Darti Web"
                     />
 
                     <link rel="shortcut icon" href="/static/favicon.ico" />
@@ -76,9 +82,11 @@ export default class MyApp extends App {
                 <ThemeProvider theme={theme}>
                     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                     <CssBaseline />
-                    <Component {...pageProps} />
+                    <Component namespacesRequired={['common']} {...pageProps} />
                 </ThemeProvider>
             </>
         );
     }
 }
+
+export default appWithTranslation(MyApp)

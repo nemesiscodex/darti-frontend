@@ -1,5 +1,6 @@
 import React from "react";
 import Dashboard from "../components/Dashboard";
+import { withTranslation } from '../i18n'
 
 function content() {
     return (
@@ -8,8 +9,8 @@ function content() {
     )
 }
 
-function users() {
-    return <Dashboard title={"Users"} content={content()} menuSelected={"users"} user={null} />
+function users({t}) {
+    return <Dashboard t={t} title={"Users"} content={content()} menuSelected={"users"} user={null} />
 }
 
-export default users;
+export default withTranslation('common')(users);

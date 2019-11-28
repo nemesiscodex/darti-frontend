@@ -1,5 +1,6 @@
 import React from "react";
 import Dashboard from "../components/Dashboard";
+import { withTranslation } from '../i18n'
 
 function content() {
     return (
@@ -8,8 +9,8 @@ function content() {
     )
 }
 
-function map() {
-    return <Dashboard title={"Map"} content={content()} menuSelected={"map"} user={null} />
+function map({t}) {
+    return <Dashboard t={t} title={"Map"} content={content()} menuSelected={"map"} user={null} />
 }
 
-export default map;
+export default withTranslation('common')(map);

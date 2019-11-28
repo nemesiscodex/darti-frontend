@@ -1,5 +1,6 @@
 import React from "react";
 import Dashboard from "../components/Dashboard";
+import { withTranslation } from '../i18n'
 
 function content() {
     return (
@@ -8,8 +9,8 @@ function content() {
     )
 }
 
-function settings() {
-    return <Dashboard title={"Settings"} content={content()} menuSelected={"settings"} user={null} />
+function settings({t}) {
+    return <Dashboard t={t} title={"Settings"} content={content()} menuSelected={"settings"} user={null} />
 }
 
-export default settings;
+export default withTranslation('common')(settings);

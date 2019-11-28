@@ -1,8 +1,9 @@
-import Chart from "./Chart";
-import React from "react";
-import echarts from "echarts/lib/echarts";
+import { Chart, addCommas } from "./Chart";
 
-function sensorData(data) {
+
+import React from "react";
+
+function sensorData(t, data) {
 
     let categoryData = data.reduce(function(map, value) {
         let index = parseInt(value.sensorIdentifier);
@@ -13,11 +14,9 @@ function sensorData(data) {
 
     let categories = Object.keys(categoryData).sort((a, b) => a - b);
 
-    console.log(categories);
-
     return {
         title: {
-            text: echarts.format.addCommas(data.length) + ' Datapoints',
+            text: addCommas(data.length) + t(' Datapoints'),
         },
         legend: {
             top: 30,
@@ -25,23 +24,40 @@ function sensorData(data) {
         xAxis: [
             {
                 type: "category",
-                data: categories
+                data: categories,
+                name: t("Sensor Identifier"),
+                nameLocation: 'middle',
+                nameGap: 25,
+                scale: true
             },
         ],
         toolbox: {
             // y: 'bottom',
             feature: {
                 dataView: {
-                    title: "Data view",
-                    lang: ['Data view', 'Close', 'Refresh'],
-                    readOnly: true
+                    title: t("Data view"),
+                    lang: [t('Data view'), t('Close')],
+                    readOnly: true,
+                    optionToContent: function(opt) {
+                        let axisData = opt.series[0].data;
+
+                        let textArea = '<textarea style="width: 100%; height: 100%; font-family: monospace; font-size: 14px; line-height: 1.6rem; color: rgb(0, 0, 0); border-color: rgb(51, 51, 51); background-color: rgb(255, 255, 255);">'
+                            + '"' + t("Sensor Identifier") + '",'
+                            + '"' + t("Activation Count") + '\n';
+                        for (let i = 0, l = axisData.length; i < l; i++) {
+                            textArea += categories[i] + ','
+                                + axisData[i] + '\n';
+                        }
+                        textArea += '</textarea>';
+                        return textArea;
+                    },
                 },
                 saveAsImage: {
                     pixelRatio: 4,
-                    title: "Save Image"
+                    title: t("Save Image")
                 },
                 restore: {
-                    title: "Restore"
+                    title: t("Restore")
                 },
             }
         },
@@ -54,9 +70,9 @@ function sensorData(data) {
         yAxis: [
             {
                 type: "value",
-                name: "Activation Count",
+                name: t("Activation Count"),
                 nameLocation: 'middle',
-                nameGap: 50,
+                nameGap: 60,
                 scale: true
             },
         ],
@@ -70,14 +86,14 @@ function sensorData(data) {
             },
         ],
         grid: {
-            left: 70,
+            left: 75,
             right: 15
         }
     }
 }
 
-export default function SensorChart({data}) {
+export default function SensorChart({t, data}) {
     return (<>
-        <Chart options={sensorData(data)}/>
+        <Chart options={sensorData(t, data)}/>
     </>)
 }

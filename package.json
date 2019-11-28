@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@date-io/core": "^1.3.6",
+    "@date-io/date-fns": "^1.3.11",
     "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
+    "@material-ui/pickers": "^3.2.8",
     "@next/bundle-analyzer": "^9.1.4",
     "clsx": "^1.0.4",
+    "date-fns": "2.1.0",
     "echarts": "^4.5.0",
     "echarts-for-react": "^2.0.15-beta.1",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^9.1.4",
+    "next-i18next": "^2.1.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -18,9 +23,9 @@
     "typeface-roboto": "^0.0.75"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "node src/index.js",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node src/index.js",
     "analyze": "ANALYZE=true next build"
   },
   "eslintConfig": {

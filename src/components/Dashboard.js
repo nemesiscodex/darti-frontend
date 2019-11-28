@@ -8,11 +8,10 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Container from '@material-ui/core/Container';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import DashboardDrawer from "./DashboardDrawer";
-import theme from '../theme'
 import Hidden from "@material-ui/core/Hidden";
 
 
-const drawerWidth = 250;
+const drawerWidth = 280;
 const useStyles = makeStyles(theme => ({
     root: {
         [theme.breakpoints.up('sm')]: {
@@ -33,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function Dashboard({title, menuSelected, content, user=null}) {
+function Dashboard({t, title, menuSelected, content, user=null}) {
 
     function userLogin() {
 
@@ -46,7 +45,7 @@ function Dashboard({title, menuSelected, content, user=null}) {
         } else {
             return (<IconButton color="inherit" >
                 <AccountCircleIcon className={classes.menuButton}/>
-                Log in
+                {t("Log in")}
             </IconButton>)
         }
 
@@ -78,6 +77,7 @@ function Dashboard({title, menuSelected, content, user=null}) {
             </Toolbar>
         </AppBar>
         <DashboardDrawer
+            t={t}
             drawerWidth={drawerWidth}
             open={open}
             closeDrawer={closeDrawer}

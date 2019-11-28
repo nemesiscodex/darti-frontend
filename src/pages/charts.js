@@ -6,49 +6,109 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TemperatureChart from '../components/charts/TemperatureChart';
 import WindChart from "../components/charts/WindChart";
-import RainFallChart from "../components/charts/RainfallChart";
-import PressureChart from "../components/charts/PresureChart";
+import RainfallChart from "../components/charts/RainfallChart";
+import PressureChart from "../components/charts/PressureChart";
 import SensorChart from "../components/charts/SensorChart";
+import CalendarChart from "../components/charts/CalendarChart";
+import { withTranslation } from '../i18n'
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns';
+import Button from "@material-ui/core/Button";
+import RefreshIcon from "@material-ui/icons/Refresh"
 
+const datePicker = (t, selectedDate, setDate, label) => (
 
-const content = (readings, activations) => {
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+            style={{width: "100%"}}
+            disableToolbar
+            autoOk
+            disableFuture
+            format={t("MM/dd/yyyy")}
+            margin="normal"
+            label={label}
+            value={selectedDate}
+            onChange={setDate}
+            // views={["year", "month"]
+            variant={"inline"}
+        />
+    </MuiPickersUtilsProvider>
+);
+const content = (t, readings, activations) => {
 
-    console.log(readings.length);
-    console.log(activations[0]);
+    const [readingsState, setReadings] = React.useState(readings);
+    const [activationsState, setActivations] = React.useState(activations);
+    const [fromDate, setFromDate] = React.useState(null);
+    const [toDate, setToDate] = React.useState(null);
 
-    if(readings && readings.length > 0) {
+    function changeDate(from, to) {
+        return function() {
+            if (from) {
+                activations = activations.filter((a) => new Date(a.timestamp) >= new Date(from));
+                readings = readings.filter((a) => new Date(a.timestamp) >= new Date(from));
+            }
+
+            if (to) {
+                activations = activations.filter((a) => new Date(a.timestamp) <= new Date(to));
+                readings = readings.filter((a) => new Date(a.timestamp) <= new Date(to));
+            }
+
+            setActivations(activations);
+            setReadings(readings);
+        }
+    }
+
+    if(readings && readings.length > 0 && activations && activations.length > 0) {
         return (
             <>
                 <Grid container spacing={2} style={{marginTop: 2, textAlign: "center"}}>
                     <Grid item xs={12}>
+                            <Grid container spacing={3} style={{padding: "5px"}}>
+                                <Grid item lg={4} md={5} sm={12} xs={12}>
+                                    {datePicker(t, fromDate, setFromDate, t("From Date"))}
+                                </Grid>
+                                <Grid item lg={4} md={5} sm={12} xs={12}>
+                                    {datePicker(t, toDate, setToDate, t("To Date"))}
+                                </Grid>
+                                <Grid item lg={4} md={2} sm={12} xs={12} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                    <Button onClick={changeDate(fromDate, toDate)} variant={"outlined"} style={{marginTop: "25px", width:"100%"}}>
+                                        <RefreshIcon />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
                         <Typography variant={"h4"}>
-                            Sensor Activations
+                            {t("Sensor Activations")}
                         </Typography>
-                        <SensorChart data={activations} />
+                        <SensorChart t={t} data={activationsState} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <CalendarChart t={t} data={activationsState} />
                     </Grid>
                     <Grid item xs={12} lg={6}>
                         <Typography variant={"h4"}>
-                            Temperature
+                            {t("Temperature")}
                         </Typography>
-                        <TemperatureChart data={readings} />
+                        <TemperatureChart t={t} data={readingsState} />
                     </Grid>
                     <Grid item xs={12} lg={6}>
                         <Typography variant={"h4"}>
-                            Wind
+                            {t("Wind")}
                         </Typography>
-                        <WindChart data={readings} />
+                        <WindChart t={t} data={readingsState} />
                     </Grid>
                     <Grid item xs={12} lg={6}>
                         <Typography variant={"h4"}>
-                            Rainfall/Humidity
+                            {t("Rainfall/Humidity")}
                         </Typography>
-                        <RainFallChart data={readings} />
+                        <RainfallChart t={t} data={readingsState} />
                     </Grid>
                     <Grid item xs={12} lg={6}>
                         <Typography variant={"h4"}>
-                            Atmospheric Pressure
+                            {t("Atmospheric Pressure")}
                         </Typography>
-                        <PressureChart data={readings} />
+                        <PressureChart t={t} data={readingsState} />
                     </Grid>
                 </Grid>
             </>
@@ -57,6 +117,21 @@ const content = (readings, activations) => {
         return (
             <>
                 <Grid container spacing={3} style={{marginTop: 2}}>
+                    <Grid item xs={12}>
+                        <Grid container spacing={3} style={{padding: "5px"}}>
+                            <Grid item lg={4} md={5} sm={12} xs={12}>
+                                {datePicker(t, fromDate, setFromDate, t("From Date"))}
+                            </Grid>
+                            <Grid item lg={4} md={5} sm={12} xs={12}>
+                                {datePicker(t, toDate, setToDate, t("To Date"))}
+                            </Grid>
+                            <Grid item lg={4} md={2} sm={12} xs={12} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <Button onClick={changeDate(fromDate, toDate)} variant={"outlined"} style={{marginTop: "25px", width:"100%"}}>
+                                    <RefreshIcon />
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                     <Grid item xs={12}>
                         <Paper style={{padding: 20, textAlign: "center"}}>
                             <Typography variant={"h4"}>
@@ -69,18 +144,18 @@ const content = (readings, activations) => {
         )
     }
 
-}
+};
 
-function charts({readings, activations}) {
-    return <Dashboard title={"Charts"} content={content(readings.data, activations.data)} menuSelected={"charts"} user={null} />
+function charts({t, readings, activations}) {
+    return <Dashboard t={t} title={t("Charts")} content={content(t, readings.data, activations.data)} menuSelected={"charts"} user={null} />
 }
 
 async function getReadings() {
-    const response = await fetch('http://localhost:9000/readings?elements=500');
+    const response = await fetch('https://backend.nemesiscodex.io/readings?elements=50');
     return await response.json();
 }
 async function getActivations() {
-    const response = await fetch('http://localhost:9000/activations?elements=500');
+    const response = await fetch('https://backend.nemesiscodex.io/activations?elements=50');
     return await response.json();
 }
 
@@ -91,4 +166,4 @@ charts.getInitialProps = async function() {
   }
 };
 
-export default charts;
+export default withTranslation('common')(charts);

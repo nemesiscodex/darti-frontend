@@ -1,14 +1,13 @@
-import Chart from "./Chart";
+import { Chart, addCommas } from "./Chart";
 import React from "react";
-import echarts from "echarts/lib/echarts";
 
-function rainfallData(data) {
+function rainfallData(t, data) {
     const dataSize = data.length;
     const dataStart = Math.min(99, Math.max(0, Math.round((dataSize-30)*100/dataSize)));
 
     return {
         title: {
-            text: echarts.format.addCommas(data.length) + ' Datapoints',
+            text: addCommas(data.length) + t(' Datapoints'),
         },
         legend: {
             top: 30,
@@ -24,24 +23,23 @@ function rainfallData(data) {
                 magicType: {
                     type: ['line', 'bar'],
                     title: {
-                        line: "Line",
-                        bar: "Bar"
+                        line: t("Line"),
+                        bar: t("Bar")
                     }
                 },
                 dataView: {
-                    title: "Data view",
-                    lang: ['Data view', 'Close', 'Refresh'],
+                    title: t("Data view"),
+                    lang: ['Data view', 'Close'].map(t),
                     optionToContent: function(opt) {
-                        console.log(opt.dataset[0].source);
-                        var axisData = opt.dataset[0].source;
+                        let axisData = opt.dataset[0].source;
 
                         console.log(axisData.length);
-                        var series = opt.series;
-                        var textArea = '<textarea style="width: 100%; height: 100%; font-family: monospace; font-size: 14px; line-height: 1.6rem; color: rgb(0, 0, 0); border-color: rgb(51, 51, 51); background-color: rgb(255, 255, 255);">'
+                        let series = opt.series;
+                        let textArea = '<textarea style="width: 100%; height: 100%; font-family: monospace; font-size: 14px; line-height: 1.6rem; color: rgb(0, 0, 0); border-color: rgb(51, 51, 51); background-color: rgb(255, 255, 255);">'
                             + '"Time",'
                             + '"' + series[0].name + '"'
                             + '"' + series[1].name + '"\n';
-                        for (var i = 1, l = axisData.length; i < l; i++) {
+                        for (let i = 1, l = axisData.length; i < l; i++) {
                             textArea += axisData[i][0] + ','
                                 + axisData[i][1] + ','
                                 + axisData[i][2] + '\n';
@@ -53,10 +51,10 @@ function rainfallData(data) {
                 },
                 saveAsImage: {
                     pixelRatio: 4,
-                    title: "Save Image"
+                    title: t("Save Image")
                 },
                 restore: {
-                    title: "Restore"
+                    title: t("Restore")
                 },
             }
         },
@@ -86,13 +84,13 @@ function rainfallData(data) {
         yAxis: [
             {
                 type: "value",
-                name: "Rainfall (mm)",
+                name: t("Rainfall (mm)"),
                 nameLocation: 'middle',
                 nameGap: 25
             },
             {
                 type: "value",
-                name: "Humidity (%)",
+                name: t("Humidity (%)"),
                 nameLocation: 'middle',
                 nameGap: 25
             },
@@ -101,11 +99,11 @@ function rainfallData(data) {
             source: [[data[0].timestamp - 1, 0, 0],
                 ...data.map((entry) =>
                     [entry.timestamp, entry.weatherInfo.interiorTemperature, entry.weatherInfo.exteriorTemperature])],
-            dimensions: ['Timestamp', 'Rainfall', 'Humidity']
+            dimensions: ['Timestamp', 'Rainfall', 'Humidity'].map(t)
         },
         series: [
             {
-                name: 'Rainfall',
+                name: t('Rainfall'),
                 type: 'bar',
                 large: true,
                 smooth:true,
@@ -113,14 +111,14 @@ function rainfallData(data) {
                     color: "#536F86"
                 },
                 encode: {
-                    x: 'Timestamp',
-                    y: 'Rainfall'
+                    x: t('Timestamp'),
+                    y: t('Rainfall')
                 },
                 yAxisIndex: 0,
                 areaStyle: {}
             },
             {
-                name: 'Humidity',
+                name: t('Humidity'),
                 type: 'bar',
                 large: true,
                 smooth:true,
@@ -128,8 +126,8 @@ function rainfallData(data) {
                     color: "#FBB043"
                 },
                 encode: {
-                    x: 'Timestamp',
-                    y: 'Humidity'
+                    x: t('Timestamp'),
+                    y: t('Humidity')
                 },
                 yAxisIndex: 1,
                 areaStyle: {}
@@ -142,8 +140,8 @@ function rainfallData(data) {
     }
 }
 
-export default function RainFallChart({data}) {
+export default function RainFallChart({t, data}) {
     return (<>
-        <Chart options={rainfallData(data)}/>
+        <Chart options={rainfallData(t, data)}/>
     </>)
 }
