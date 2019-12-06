@@ -164,7 +164,8 @@ charts.getInitialProps = async function() {
     let [readings, activations] = await Promise.all([getReadings(), getActivations()]);
   return {
       readings: readings,
-      activations: activations
+      activations: activations,
+      namespacesRequired: ['common']
   }
 };
 

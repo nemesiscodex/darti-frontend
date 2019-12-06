@@ -9,18 +9,20 @@ import Container from '@material-ui/core/Container';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import DashboardDrawer from "./DashboardDrawer";
 import Hidden from "@material-ui/core/Hidden";
+import Fab from "@material-ui/core/Fab";
+import Link from "./Link";
 
 
 const drawerWidth = 280;
 const useStyles = makeStyles(theme => ({
     root: {
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
         }
     },
     menuButton: {
-        marginRight: theme.spacing(1),
+        margin: theme.spacing(0, 1, 0),
     },
     title: {
         flexGrow: 1,
@@ -32,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function Dashboard({t, title, menuSelected, content, user=null}) {
+function Dashboard({t, title, menuSelected, content, toolbar=null, user=null}) {
 
     function userLogin() {
 
@@ -43,10 +45,13 @@ function Dashboard({t, title, menuSelected, content, user=null}) {
                 </Typography>
             </>)
         } else {
-            return (<IconButton color="inherit" >
-                <AccountCircleIcon className={classes.menuButton}/>
-                {t("Log in")}
-            </IconButton>)
+            return (
+                <Link href="/logout"  className={classes.menuButton}>
+                    <Fab variant={"extended"} color="default">
+                        <AccountCircleIcon />
+                        {t("Log in")}
+                    </Fab>
+            </Link>)
         }
 
     }
@@ -65,7 +70,7 @@ function Dashboard({t, title, menuSelected, content, user=null}) {
     return (<>
         <AppBar className={classes.root} position={"static"}>
             <Toolbar>
-                <Hidden smUp implementation="css">
+                <Hidden mdUp implementation="css">
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openDrawer}>
                         <MenuIcon/>
                     </IconButton>
@@ -73,6 +78,7 @@ function Dashboard({t, title, menuSelected, content, user=null}) {
                 <Typography variant="h6" className={classes.title}>
                     {title}
                 </Typography>
+                {toolbar}
                 {userLogin()}
             </Toolbar>
         </AppBar>

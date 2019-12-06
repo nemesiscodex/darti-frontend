@@ -19,12 +19,13 @@ import Divider from "@material-ui/core/Divider";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import Link from "./Link";
-import {Drawer} from "@material-ui/core";
+import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import TranslateIcon from "@material-ui/icons/Translate"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import theme from '../theme'
 import { i18n } from "../i18n";
 
 function useStyles(drawerWidth) {
@@ -78,9 +79,10 @@ function menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected) {
                 selected={key === menuSelected}
                 href={href}
                 component={Link}
+                style={(key === menuSelected)? {backgroundColor: theme.palette.secondary.main}: {}}
                 onClick={closeDrawer}
                 button>
-                <ListItemIcon><CurrentIcon/></ListItemIcon>
+                <ListItemIcon><CurrentIcon style={{color: theme.palette.primary.main}} /></ListItemIcon>
                 <ListItemText primary={title} />
             </ListItem>
         )
@@ -166,11 +168,7 @@ function menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected) {
     </>)
 }
 
-function DashboardDrawer({t, drawerWidth, open, openDrawer, closeDrawer, menuSelected}) {
-
-
-    const classes = useStyles(drawerWidth);
-
+const langPicker = (t, currentLanguage, drawerWidth) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
 
@@ -189,10 +187,51 @@ function DashboardDrawer({t, drawerWidth, open, openDrawer, closeDrawer, menuSel
         }
     };
 
+    return (<>
+        <List>
+            <ListItem onClick={handleClick} >
+                <ListItemIcon><TranslateIcon style={{color: theme.palette.primary.main}}/></ListItemIcon>
+                <ListItemText>{(currentLanguage === "en")? t("English"): t("Spanish")}</ListItemText>
+                <ListItemIcon style={{display: "contents"}}><ExpandMoreIcon /></ListItemIcon>
+            </ListItem>
+        </List>
+        <Menu
+            variant={"menu"}
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+        >
+            <MenuItem
+                style={{
+                    width: drawerWidth-30,
+                    backgroundColor: (currentLanguage === "en")? theme.palette.secondary.main: null
+                }}
+                onClick={changeLanguage("en")}
+                selected={currentLanguage === "en"}
+            >
+                {t("English")}
+            </MenuItem>
+            <MenuItem
+                style={{backgroundColor: (currentLanguage === "es")? theme.palette.secondary.main: null}}
+                onClick={changeLanguage("es")}
+                selected={currentLanguage === "es"}>
+                {t("Spanish")}
+            </MenuItem>
+        </Menu>
+    </>);
+
+};
+
+function DashboardDrawer({t, drawerWidth, open, openDrawer, closeDrawer, menuSelected}) {
+
+
+    const classes = useStyles(drawerWidth);
+
     const language = i18n.language;
 
     return (<>
-        <Hidden xsUp implementation="css">
+        <Hidden smUp implementation="css">
             <SwipeableDrawer
                 variant={"temporary"}
                 onBackdropClick={closeDrawer}
@@ -203,9 +242,10 @@ function DashboardDrawer({t, drawerWidth, open, openDrawer, closeDrawer, menuSel
                 disableDiscovery={true}
                 >
                 {menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected)}
+                {langPicker(t, language, drawerWidth)}
             </SwipeableDrawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden smDown implementation="css">
             <Drawer
                 className={classes.drawer}
                 classes={{
@@ -214,28 +254,7 @@ function DashboardDrawer({t, drawerWidth, open, openDrawer, closeDrawer, menuSel
                 variant={"permanent"}
             >
                 {menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected)}
-                <List>
-                    <ListItem onClick={handleClick} href="#" >
-                        <ListItemIcon><TranslateIcon /></ListItemIcon>
-                        <ListItemText>{(language == "en")? t("English"): t("Spanish")}</ListItemText>
-                        <ListItemIcon><ExpandMoreIcon /></ListItemIcon>
-                    </ListItem>
-                </List>
-                <Menu
-                    variant={"menu"}
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                    >
-                    <MenuItem
-                        style={{width: drawerWidth-50}} onClick={changeLanguage("en")} selected={language === "en"}>
-                        {t("English")}
-                    </MenuItem>
-                    <MenuItem onClick={changeLanguage("es")} selected={language === "es"}>
-                        {t("Spanish")}
-                    </MenuItem>
-                </Menu>
+                {langPicker(t, language, drawerWidth)}
             </Drawer>
         </Hidden>
     </>)

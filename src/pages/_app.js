@@ -76,6 +76,8 @@ class MyApp extends App {
                     />
 
                     <link rel="shortcut icon" href="/static/favicon.ico" />
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css"
+                          integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossOrigin="anonymous"/>
                     <title>Darti Web</title>
                     {nprogressCss()}
                 </Head>
