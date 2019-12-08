@@ -66,7 +66,6 @@ class MyApp extends App {
 
     render() {
         const { Component, pageProps } = this.props;
-
         return (
             <>
                 <Head>
@@ -74,10 +73,11 @@ class MyApp extends App {
                         name="description"
                         content="Darti Web"
                     />
-
+                    <meta name="theme-color" content={theme.palette.primary.main} />
+                    <link rel="apple-touch-icon" href="/static/icons/icon-57.png"/>
+                    <link rel="manifest" href="/static/manifest.json" />
                     <link rel="shortcut icon" href="/static/favicon.ico" />
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css"
-                          integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossOrigin="anonymous"/>
+                    <link rel="stylesheet" href="/static/css/leaflet.css" />
                     <title>Darti Web</title>
                     {nprogressCss()}
                 </Head>

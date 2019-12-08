@@ -4,13 +4,14 @@ import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../theme';
 
 export default class MyDocument extends Document {
+
     render() {
         return (
-            <html>
+            <html lang={this.props.__NEXT_DATA__.props.initialLanguage}>
             <Head>
             <meta charSet="utf-8" />
-            {/* PWA primary color */}
             <meta name="theme-color" content={theme.palette.primary.main} />
+            {/* PWA primary color */}
             </Head>
             <body>
             <Main />
@@ -51,7 +52,7 @@ MyDocument.getInitialProps = async ctx => {
     ctx.renderPage = () =>
     originalRenderPage({
         enhanceApp: App => props => sheets.collect(<App {...props} />),
-});
+    });
 
     const initialProps = await Document.getInitialProps(ctx);
 

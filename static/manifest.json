@@ -1,0 +1,26 @@
+{
+	"name": "Darti Web",
+	"short_name": "Darti Web",
+	"icons": [
+		{
+			"src": "/static/icons/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/static/icons/icon-256.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		},
+		{
+			"src": "/static/icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"start_url": "/",
+	"display": "standalone",
+	"orientation": "natural",
+	"background_color": "#fff",
+	"theme_color": "#1f2b38"
+}

@@ -32,6 +32,12 @@ const datePicker = (t, selectedDate, setDate, label) => (
             onChange={setDate}
             // views={["year", "month"]
             variant={"inline"}
+            inputProps={{
+                'aria-label': label
+            }}
+            KeyboardButtonProps={{
+                'aria-label': "Pick " + label + " date",
+            }}
         />
     </MuiPickersUtilsProvider>
 );
@@ -72,7 +78,7 @@ const content = (t, readings, activations) => {
                                     {datePicker(t, toDate, setToDate, t("To Date"))}
                                 </Grid>
                                 <Grid item lg={4} md={2} sm={12} xs={12} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                    <Button onClick={changeDate(fromDate, toDate)} variant={"outlined"} style={{marginTop: "25px", width:"100%"}}>
+                                    <Button aria-label="Refresh" onClick={changeDate(fromDate, toDate)} variant={"outlined"} style={{marginTop: "25px", width:"100%"}}>
                                         <RefreshIcon />
                                     </Button>
                                 </Grid>

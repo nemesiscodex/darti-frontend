@@ -20,6 +20,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Hidden from "@material-ui/core/Hidden";
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 import theme from "../theme";
+import Grow from '@material-ui/core/Grow';
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -51,7 +52,9 @@ const useStyles = makeStyles(theme => ({
 
 function sensorItem(sensor, classes) {
     return (
-            <Paper key={sensor.identifier} className={classes.paper} elevation={3}>
+
+        <Grow in={true} timeout={80*sensor.identifier} key={sensor.identifier}>
+            <Paper className={classes.paper} elevation={3}>
 
                 <Hidden mdDown implementation="css" className={classes.paperBox}>
                     <Table className={classes.table}>
@@ -173,6 +176,7 @@ function sensorItem(sensor, classes) {
                     </Table>
                 </Hidden>
             </Paper>
+        </Grow>
     )
 }
 

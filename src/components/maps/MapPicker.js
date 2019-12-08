@@ -1,7 +1,6 @@
 import React from "react";
 import {Map, TileLayer, withLeaflet, MapControl, Marker} from "react-leaflet";
 import { OpenStreetMapProvider,GeoSearchControl } from "leaflet-geosearch";
-import 'leaflet-geosearch/assets/css/leaflet.css'
 import Button from "@material-ui/core/Button";
 import {Typography} from "@material-ui/core";
 

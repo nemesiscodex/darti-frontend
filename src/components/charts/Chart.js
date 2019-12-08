@@ -13,6 +13,7 @@ import 'echarts/lib/component/calendar';
 import 'echarts/lib/component/visualMap';
 import 'echarts/lib/chart/custom';
 import 'echarts/lib/chart/heatmap';
+import {NoSsr} from "@material-ui/core";
 
 export const addCommas = echarts.format.addCommas;
 export const formatTime = echarts.format.formatTime;
@@ -34,17 +35,21 @@ export function Chart({options, height="300px"}) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        textAlign: "center"
+        textAlign: "center",
+        minHeight: height,
     }: null}>
         {loader()}
-        <ReactEchartsCore
-            style={{height: height}}
-            notMerge={true}
-            theme={"light"}
-            echarts={echarts}
-            option={options}
-            onChartReady={onChartReady}
-        />
+        <NoSsr>
+            <ReactEchartsCore
+                style={{height: height}}
+                notMerge={true}
+                theme={"light"}
+                echarts={echarts}
+                option={options}
+                aria-label={"Chart"}
+                onChartReady={onChartReady}
+            />
+        </NoSsr>
     </div>)
 
 }

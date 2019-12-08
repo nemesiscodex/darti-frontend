@@ -15,6 +15,9 @@ function sensorData(t, data) {
     let categories = Object.keys(categoryData).sort((a, b) => a - b);
 
     return {
+        aria: {
+          show: true
+        },
         title: {
             text: addCommas(data.length) + t(' Datapoints'),
         },

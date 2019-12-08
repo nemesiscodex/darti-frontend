@@ -151,6 +151,7 @@ function menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected) {
             <IconButton className={classes.dartiButton}
                         disableRipple={true}
                         disableFocusRipple={true}
+                        aria-label={"Darti Web Logo"}
             >
                 <Darti className={classes.darti} />
             </IconButton>
@@ -162,9 +163,8 @@ function menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected) {
                 </IconButton>
             </Hidden>
         </div>
-        <List>
-            {items.map((item) => createItem({...item}))}
-        </List>
+        {items.map((item) => createItem({...item}))}
+
     </>)
 }
 
