@@ -1,16 +1,15 @@
-import React from "react";
-import Dashboard from "../components/Dashboard";
-import { withTranslation } from '../i18n'
+import React from 'react';
+import Dashboard from '../components/Dashboard';
+import { withTranslation } from '../i18n';
 
 function content() {
-    return (
-        <div >
-        </div>
-    )
+  return (
+    <div />
+  );
 }
 
-function index({t}) {
-    return <Dashboard t={t} title={t("Home")} content={content()} menuSelected={"home"} user={null} />
+function index({ t }) {
+  return <Dashboard t={t} title={t('Home')} content={content()} menuSelected="home" user={null} />;
 }
 
 export default withTranslation('common')(index);

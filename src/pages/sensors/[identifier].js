@@ -1,14 +1,13 @@
-import Dashboard from "../../components/Dashboard";
-import React from "react";
-import {withTranslation} from "../../i18n";
+import React from 'react';
+import Dashboard from '../../components/Dashboard';
+import { withTranslation } from '../../i18n';
 
 function content(t, sensorData) {
-    return (<></>)
+  return (<></>);
 }
 
-function newSensor({t, sensorsData}) {
-
-    return <Dashboard t={t} title={t("Sensors")} content={content(t, sensorsData)} menuSelected={"sensors"} user={null} />
+function newSensor({ t, sensorsData }) {
+  return <Dashboard t={t} title={t('Sensors')} content={content(t, sensorsData)} menuSelected="sensors" user={null} />;
 }
 
 export default withTranslation('common')(newSensor);

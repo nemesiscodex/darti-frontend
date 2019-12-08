@@ -11,27 +11,25 @@ const app = next({ dev: process.env.NODE_ENV !== 'production' });
 const handle = app.getRequestHandler();
 
 (async () => {
-    await app.prepare()
-    const server = express();
+  await app.prepare();
+  const server = express();
 
-    server.use(nextI18NextMiddleware(nextI18next));
+  server.use(nextI18NextMiddleware(nextI18next));
 
-    server.get('*', (req, res) => {
-        const parsedUrl = parse(req.url, true);
-        const { pathname } = parsedUrl;
+  server.get('*', (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const { pathname } = parsedUrl;
 
-        // handle GET request to /service-worker.js
-        if (pathname.endsWith('/service-worker.js') || pathname === '/service-worker.js') {
-            const filePath = join('.next', '/service-worker.js');
+    // handle GET request to /service-worker.js
+    if (pathname.endsWith('/service-worker.js') || pathname === '/service-worker.js') {
+      const filePath = join('.next', '/service-worker.js');
 
-            return app.serveStatic(req, res, filePath)
-        } else {
-            return handle(req, res, parsedUrl)
-        }
-
-    });
+      return app.serveStatic(req, res, filePath);
+    }
+    return handle(req, res, parsedUrl);
+  });
 
 
-    await server.listen(port);
-    console.log(`> Ready on http://localhost:${port}`) // eslint-disable-line no-console
+  await server.listen(port);
+  console.log(`> Ready on http://localhost:${port}`); // eslint-disable-line no-console
 })();

@@ -31,13 +31,20 @@
     "typeface-roboto": "^0.0.75"
   },
   "scripts": {
+    "lint": "eslint src/**",
     "dev": "node src/index.js",
     "build": "next build",
     "start": "NODE_ENV=production node src/index.js",
     "analyze": "ANALYZE=true next build"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "plugins": [
+      "react"
+    ]
   },
   "browserslist": {
     "production": [
@@ -50,5 +57,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^1.7.0"
   }
 }
