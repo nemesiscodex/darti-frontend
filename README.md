@@ -1,9 +1,9 @@
 Darti Frontend (WIP)
 ======
 ### Demos
-- [Backend](https://backend-darti.apps.ca-central-1.starter.openshift-online.com/) ([repo](github.com/nemesiscodex/darti-backend))
+- [Backend](https://backend-darti.apps.ca-central-1.starter.openshift-online.com/) ([repo](https://github.com/nemesiscodex/darti-backend))
     - Basic crud with test data + pagination
-- [Frontend](https://frontend-darti.apps.ca-central-1.starter.openshift-online.com/) ([repo](github.com/nemesiscodex/darti-frontend))
+- [Frontend](https://frontend-darti.apps.ca-central-1.starter.openshift-online.com/) ([repo](https://github.com/nemesiscodex/darti-frontend))
     - Charts + Sensor List/Create
 
 ## Architecture
