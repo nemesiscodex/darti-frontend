@@ -6,7 +6,22 @@ Darti Frontend (WIP)
 - [Frontend](https://frontend-darti.apps.ca-central-1.starter.openshift-online.com/) ([repo](https://github.com/nemesiscodex/darti-frontend))
     - Charts + Sensor List/Create
 
-## Architecture
+### Usage
+Install [nvm](http://nvm.sh/) to manage node versions
+```
+nvm install v12
+nvm use 12
+yarn install
+yarn build && yarn start
+``` 
+The app will be available in http://localhost:3000/
+
+For development:
+```
+yarn dev
+```
+
+### Architecture
 <img src="https://user-images.githubusercontent.com/3976562/70764552-a6acbf80-1d36-11ea-907a-626d017cd5de.png" width="300" alt="architecture">
 
 #### Frontend tech
@@ -16,13 +31,39 @@ Darti Frontend (WIP)
 - i18-next
 - Leaflet
 
-## Basic data model
+#### Basic data model
 <img src="https://user-images.githubusercontent.com/3976562/70762245-af00fc80-1d2e-11ea-8b59-6a18d3bffe6d.png" alt="Data model" width="300" />
 
 - **Area**: A named area in a map. A polygon defined by a list of points with GPS coordinates.
 - **Sensor**: Sensor with a type, an identifier and GPS coordinates.
 - **Activation**: It represents the activation count of a Sensor in a specific reading instance.
 - **Reading**: A reading represents the state of the sensor network in a specific moment in time. It also contains weather information, the system status and GPS coordinates.
+
+#### Roadmap
+- [ ] Generic sensor dashboard. Can be used for similar projects.
+- [ ] /login User authentication + logout + Role/permission handling.
+- [ ] /sensors Sensor Crud + Validation
+- [ ] /areas Area Crud + Draw Area polygon in map + Validation
+- [ ] /map to display sensors. Filter by Area/Date range. Heatmap of activations. 
+- [ ] / (home) add project description + infographics
+- [ ] /download Download all data in csv or json formats.
+- [ ] /user User crud
+    - [ ] Role/Permission management
+- [ ] /settings
+    - [ ] Enable/disable Download data (Feature flag)
+    - [ ] Add sensor types
+    - [ ] Manually load data with csv
+    - [ ] Clear cache on demand
+- [ ] Translate the whole site
+    - [ ] Spanish
+    - [ ] Other languages?
+- [ ] Reduce data usage in charts
+- [ ] Improve filtering in charts
+- [ ] Add more charts/reports
+- [ ] Improve Accessibility
+- [ ] Performance improvements (Make sure is accessible with slow internet!)
+- [ ] Improve Offline support and PWA
+- [ ] Improve Responsiveness
 
 ## About the project
 ### Chagas Disease
