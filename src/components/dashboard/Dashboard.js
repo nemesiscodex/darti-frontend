@@ -1,16 +1,17 @@
-import AppBar from '@material-ui/core/AppBar';
+import AppBar from '@material-ui/core/AppBar/index';
 import React from 'react';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar/index';
+import IconButton from '@material-ui/core/IconButton/index';
+import Typography from '@material-ui/core/Typography/index';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Container from '@material-ui/core/Container';
+import Container from '@material-ui/core/Container/index';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Hidden from '@material-ui/core/Hidden';
-import Fab from '@material-ui/core/Fab';
+import Hidden from '@material-ui/core/Hidden/index';
+import Fab from '@material-ui/core/Fab/index';
+import PropTypes from 'prop-types';
 import DashboardDrawer from './DashboardDrawer';
-import Link from './Link';
+import Link from '../Link';
 
 
 const drawerWidth = 280;
@@ -34,9 +35,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Dashboard({
-  t, title, menuSelected, content, toolbar = null, user = null,
-}) {
+const Dashboard = (props) => {
+  const {
+    t, title, menuSelected = '', content, toolbar, user,
+  } = props;
+
+  const classes = useStyles();
+
   function userLogin() {
     if (user) {
       return (
@@ -49,7 +54,7 @@ function Dashboard({
     }
     return (
       <Link href="/logout" className={classes.menuButton}>
-        <Fab variant="extended" color="default">
+        <Fab variant="extended" color="default" size={"small"}>
           <AccountCircleIcon />
           {t('Log in')}
         </Fab>
@@ -67,13 +72,18 @@ function Dashboard({
     setOpen(false);
   };
 
-  const classes = useStyles();
   return (
     <>
       <AppBar className={classes.root} position="static">
         <Toolbar>
           <Hidden mdUp implementation="css">
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openDrawer}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={openDrawer}
+            >
               <MenuIcon />
             </IconButton>
           </Hidden>
@@ -99,6 +109,22 @@ function Dashboard({
       </div>
     </>
   );
-}
+};
+
+Dashboard.defaultProps = {
+  menuSelected: undefined,
+  toolbar: undefined,
+  user: undefined,
+};
+
+
+Dashboard.propTypes = {
+  t: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  menuSelected: PropTypes.string,
+  content: PropTypes.objectOf(PropTypes.any).isRequired,
+  toolbar: PropTypes.objectOf(PropTypes.any),
+  user: PropTypes.objectOf(PropTypes.any),
+};
 
 export default Dashboard;

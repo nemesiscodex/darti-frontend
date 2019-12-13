@@ -26,6 +26,9 @@ const handle = app.getRequestHandler();
 
       return app.serveStatic(req, res, filePath);
     }
+    if (pathname.startsWith('/public/')) {
+      return handle(req, res, parse(req.url.replace("/public/", "/"), true));
+    }
     return handle(req, res, parsedUrl);
   });
 

@@ -1,68 +1,46 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Darti Frontend (WIP)
+======
+### Demos
+- [Backend](https://backend-darti.apps.ca-central-1.starter.openshift-online.com/) ([repo](github.com/nemesiscodex/darti-backend))
+    - Basic crud with test data + pagination
+- [Frontend](https://frontend-darti.apps.ca-central-1.starter.openshift-online.com/) ([repo](github.com/nemesiscodex/darti-frontend))
+    - Charts + Sensor List/Create
 
-## Available Scripts
+## Architecture
+<img src="https://user-images.githubusercontent.com/3976562/70764552-a6acbf80-1d36-11ea-907a-626d017cd5de.png" width="300" alt="architecture">
 
-In the project directory, you can run:
+#### Frontend tech
+- Reactjs
+- Nextjs
+- Material-UI
+- i18-next
+- Leaflet
 
-### `yarn start`
+## Basic data model
+<img src="https://user-images.githubusercontent.com/3976562/70762245-af00fc80-1d2e-11ea-8b59-6a18d3bffe6d.png" alt="Data model" width="300" />
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Area**: A named area in a map. A polygon defined by a list of points with GPS coordinates.
+- **Sensor**: Sensor with a type, an identifier and GPS coordinates.
+- **Activation**: It represents the activation count of a Sensor in a specific reading instance.
+- **Reading**: A reading represents the state of the sensor network in a specific moment in time. It also contains weather information, the system status and GPS coordinates.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## About the project
+### Chagas Disease
+In Paraguay, as well as in other Latin American countries, [Chagas disease](https://en.wikipedia.org/wiki/Chagas_disease)
+is one of the pressing issues in the area of public health.
 
-### `yarn test`
+This disease is caused by the parasite [Trypanosoma cruzi](https://en.wikipedia.org/wiki/Trypanosoma_cruzi), being [Triatoma infestans](https://en.wikipedia.org/wiki/Triatoma_infestans) insect or commonly called vinchuca (kissing bug), the main vector of South America.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Currently, there is a concern in European countries and on the United States, due to the growing eco-tourism to South American countries, where Chagas disease is referred to as an "exotic disease".
+Prevention mostly involves eliminating kissing bugs and avoiding their bites. **A vaccine has not been developed as of 2019**.
 
-### `yarn build`
+Treatment options for infected patients are limited.
+Early infections are treatable with the medication if given early, but becomes less effective the longer a person has had Chagas disease.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Most people with the disease live in poverty, and do not realize they are infected. 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### Eradication of Chagas Disease with Technology
+> A project in conjunction with the [Center for the Development of Scientific Research (CEDIC)](https://www.cedicpy.com/) and the [Polytechnic School of the National University of Asunción](http://www.fpuna.edu.py/).  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The monitoring of the vector transmitting Chagas disease will be possible through the implementation of a wireless infrared photoelectric sensor network for remote early detection of kissing bugs infestation in a surveillance zone.
+Readings of the sensor network will be sent from a ground station to the research lab located in the Polytechnic School using a [satellite](https://birds4.birds-project.com/).

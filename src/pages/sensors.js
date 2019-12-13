@@ -20,7 +20,7 @@ import theme from '../theme';
 import Link from '../components/Link';
 import backend from '../backend';
 import { withTranslation } from '../i18n';
-import Dashboard from '../components/Dashboard';
+import Dashboard from '../components/dashboard/Dashboard';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -206,9 +206,9 @@ function toolbar(t) {
   if (useMediaQuery(theme.breakpoints.up('lg'))) {
     return (
       <Link href="/sensors/new">
-        <Fab variant="extended" color="secondary">
+        <Fab variant="extended" color="secondary" size={"small"}>
           <AddIcon />
-                    Add
+            Add
         </Fab>
       </Link>
     );

@@ -7,7 +7,7 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns';
 import Button from '@material-ui/core/Button';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import Dashboard from '../components/Dashboard';
+import Dashboard from '../components/dashboard/Dashboard';
 import TemperatureChart from '../components/charts/TemperatureChart';
 import WindChart from '../components/charts/WindChart';
 import RainfallChart from '../components/charts/RainfallChart';

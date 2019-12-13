@@ -1,4 +1,4 @@
-import Dashboard from "../../components/Dashboard";
+import Dashboard from "../../components/dashboard/Dashboard";
 import React from "react";
 import {withTranslation} from "../../i18n";
 import makeStyles from "@material-ui/core/styles/makeStyles";

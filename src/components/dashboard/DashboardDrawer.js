@@ -1,12 +1,11 @@
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton/index';
 import React from 'react';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer/index';
+import ListItem from '@material-ui/core/ListItem/index';
+import ListItemIcon from '@material-ui/core/ListItemIcon/index';
+import ListItemText from '@material-ui/core/ListItemText/index';
 import MapIcon from '@material-ui/icons/Map';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -14,19 +13,16 @@ import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
-import Divider from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider/index';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import TranslateIcon from '@material-ui/icons/Translate';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Link from './Link';
-import Darti from '../icons/Darti';
-import theme from '../theme';
-import { i18n } from '../i18n';
+import Drawer from '@material-ui/core/Drawer/index';
+import Hidden from '@material-ui/core/Hidden/index';
+import Link from '../Link';
+import Darti from '../../icons/Darti';
+import theme from '../../theme';
+import { i18n } from '../../i18n';
+import LangPicker from "./LangPicker";
 
 function useStyles(drawerWidth) {
   return makeStyles((theme) => ({
@@ -171,61 +167,6 @@ function menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected) {
   );
 }
 
-const langPicker = (t, currentLanguage, drawerWidth) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const changeLanguage = (lang) => function () {
-    i18n.changeLanguage(lang);
-    handleClose();
-  };
-
-  return (
-    <>
-      <List>
-        <ListItem onClick={handleClick}>
-          <ListItemIcon><TranslateIcon style={{ color: theme.palette.primary.main }} /></ListItemIcon>
-          <ListItemText>{(currentLanguage === 'en') ? t('English') : t('Spanish')}</ListItemText>
-          <ListItemIcon style={{ display: 'contents' }}><ExpandMoreIcon /></ListItemIcon>
-        </ListItem>
-      </List>
-      <Menu
-        variant="menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem
-          style={{
-            width: drawerWidth - 30,
-            backgroundColor: (currentLanguage === 'en') ? theme.palette.secondary.main : null,
-          }}
-          onClick={changeLanguage('en')}
-          selected={currentLanguage === 'en'}
-        >
-          {t('English')}
-        </MenuItem>
-        <MenuItem
-          style={{ backgroundColor: (currentLanguage === 'es') ? theme.palette.secondary.main : null }}
-          onClick={changeLanguage('es')}
-          selected={currentLanguage === 'es'}
-        >
-          {t('Spanish')}
-        </MenuItem>
-      </Menu>
-    </>
-  );
-};
-
 function DashboardDrawer({
   t, drawerWidth, open, openDrawer, closeDrawer, menuSelected,
 }) {
@@ -246,7 +187,7 @@ function DashboardDrawer({
           disableDiscovery
         >
           {menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected)}
-          {langPicker(t, language, drawerWidth)}
+          <LangPicker t={t} language={language} drawerWidth={drawerWidth} />
         </SwipeableDrawer>
       </Hidden>
       <Hidden smDown implementation="css">
@@ -258,7 +199,7 @@ function DashboardDrawer({
           variant="permanent"
         >
           {menuItems(t, classes, open, openDrawer, closeDrawer, menuSelected)}
-          {langPicker(t, language, drawerWidth)}
+          <LangPicker t={t} language={language} drawerWidth={drawerWidth} />
         </Drawer>
       </Hidden>
     </>

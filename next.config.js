@@ -9,7 +9,7 @@ const withManifest = require('next-manifest');
 
 const defaults = {
     // next-manifest options
-    output: './static/', // The folder where the manifest will be generated.
+    output: './public/static/', // The folder where the manifest will be generated.
     // manifest options
     name: 'Darti Web',
     shortName: 'Darti Web',
@@ -43,11 +43,13 @@ module.exports =
             withCSS(
                 withBundleAnalyzer({
                     publicRuntimeConfig: {
-                        BACKEND_URL: process.env.REACT_APP_BACKEND_URL || "http://localhost:8888"
+                        BACKEND_URL: process.env.REACT_APP_BACKEND_URL || "http://localhost:8888",
+                        staticFolder: '/static',
                     },
                     manifest: {
                         ...defaults
-                    }
+                    },
+
                 })
             )
         )
